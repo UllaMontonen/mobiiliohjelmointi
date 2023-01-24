@@ -1,40 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 
+let secret;
+let guess;
+
 export default function App() {
-  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 100)+1);
-  //const randomNumber = 7;
-  const [number, setNumber] = useState('');
-  const [message, setMessage] = useState('');
-  const [count, setCount] = useState(0);
-
-
-  function getMessage(number, randomNumber) {  
-    if(number > randomNumber) {
-      return "Your guess " + number + " is too high";
-    } else if (number < randomNumber) {
-      return "Your guess " + number + " is too low";
-    } else {
-      Alert.alert("You guessed the number in " + (count+1) + " guesses")
-      setCount((count) => -1);
-    }
-  }
   
-  function checkGuess () {    
-    setMessage(getMessage(number, randomNumber))  
-    setCount((count) => count + 1);
-  };
+  const [input, setInput] = useState('');
+  const [message, setMessage] = useState('');
+
+  const init = () => {
+    setMessage('Guess a number between 1 and 100');
+    count = 0;
+    secret = Math.floor(Math.random() * 100) +1;
+    console.log('Secret: ', secret);
+  }
+
+  useEffect(() =>{
+    init();
+  }, [])
+
+  const checkGuess = () => {
+    const guess = Number(input);
+    count++;
+    if (guess < secret) {
+      setMessage('Your guess ' + guess + ' is too low')
+    } else if (guess > secret) {
+      setMessage("Your guess " + guess + " is too high")
+    } else {
+      Alert.alert("You guessed the number in " + (count) + " guesses")
+      init();
+    }
+    setInput('');
+  }
+
 
   return (
     <View style={styles.container}>
-      <Text>Guess a number between 1-100!</Text>
-      <Text>{message}</Text>
-      <StatusBar style="auto" />
+      <Text style={styles.title}>{message}</Text>
       <TextInput
         style={styles.input}
-        onChangeText={number => setNumber(Number.parseInt(number))}
-        value={number}
+        onChangeText={text => setInput(text)}
+        value={input}
         keyboardType="numeric"
       />
       <Button title="MAKE GUESS" onPress={checkGuess}/>
@@ -48,13 +56,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    
-
   },
+  
   input: {
     width: 150, 
     borderColor: "grey", 
     borderWidth: 1
+  },
+
+  title: {
+    fontSize: 20
   },
 
 });
