@@ -8,14 +8,13 @@ const [result, setResult] = useState('');
 const [number1, setNumber1] = useState('');
 const [number2, setNumber2] = useState('');
 
-const [text, setText] = useState('');
 const [data, setData] = useState([]);
 
 const add = () => {
   const total = number1 + number2;
-  setData([...data, {key: text}]);
   setResult(total);
-  setText(number1 + ' + ' + number2 + ' = ' + total)
+  const text = number1 + ' + ' + number2 + ' = ' + total;
+  setData([text, ...data]);
   //Alert.alert('Result: ' + total)
   setNumber1('');
   setNumber2('');
@@ -24,9 +23,9 @@ const add = () => {
 
 const minus = () => {
   const total = number1 - number2;
-  setData([...data, {key: text}]);
   setResult(total);
-  setText(number1 + ' - ' + number2 + ' = ' + total)
+  const text = number1 + ' - ' + number2 + ' = ' + total;
+  setData([text, ...data]);
   //Alert.alert('Result: ' + total)
   setNumber1('');
   setNumber2('');
@@ -56,9 +55,11 @@ const minus = () => {
     <Text>History</Text>
     <FlatList style={styles.list}
         data={data}
-        renderItem={({ item }) =>
-          <Text>{item.key}</Text>}
-        keyExtractor= {(item, index) => index.toString()}
+        keyExtractor= { (item, index) => index.toString()}
+        renderItem={({ item }) => {
+          return <Text>{item}</Text>
+        }
+        }
       />
       <StatusBar style="auto" />
     </View>
