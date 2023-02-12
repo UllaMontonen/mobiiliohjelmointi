@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
@@ -11,6 +11,8 @@ export default function Calculator( { navigation }) {
   
   const [data, setData] = useState([]);
   
+
+
   const add = () => {
     const total = number1 + number2;
     setResult(total);
@@ -18,14 +20,14 @@ export default function Calculator( { navigation }) {
     setData([text, ...data]);
     setNumber1('');
     setNumber2('');
-    //initialFocus.currect.fucus();
+    //initialFocus.current.fucus();
   }
   
   const minus = () => {
     const total = number1 - number2;
     setResult(total);
     const text = number1 + ' - ' + number2 + ' = ' + total;
-    setData([text, ...data]);
+    setData([text, ...data,]);
     setNumber1('');
     setNumber2('');
   }

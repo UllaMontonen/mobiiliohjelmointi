@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList  } from 'react-native';
 
 
-export default function History({route, navigation}) {
+export default function History({route}) {
     const { data } = route.params;
 
 
@@ -11,11 +11,9 @@ export default function History({route, navigation}) {
             <Text>History</Text>
                 <FlatList 
                     data={data}
-                    keyExtractor= { (item, index) => index.toString()}
+                    keyExtractor= { (index) => index.toString()}
                     renderItem={({ item }) => {
-                    return <Text>{item}</Text>
-                    }
-                    }
+                    return <Text>{item}</Text>}}
                 />
         </View>
     )}
