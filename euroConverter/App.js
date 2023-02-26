@@ -50,7 +50,7 @@ export default function App() {
           value={amount}
           onChangeText={text => setAmount(text)}
         />
-        <Picker style={{ height: 50, width: 150 }}
+        <Picker style={{ height: 50, width: 150, paddingTop: 30}}
           selectedValue={selected}
           onValueChange={(itemValue, itemIndex) => {
             setSelected(itemValue);
@@ -60,6 +60,7 @@ export default function App() {
         </Picker>
     </View>
     <Button
+        style={{paddingTop: 30}}
         title='Convert'
         onPress={convert}
         />
@@ -72,17 +73,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    marginTop: 30
+    marginTop: 50
   },
   valuerow: {
     paddingTop: 20,
-    paddingBottom: 10
+    paddingBottom: 10,
+    marginTop: 20
   },
   inputrow: {
     flexDirection: 'row',
     borderColor: "grey", 
     borderWidth: 1,
-    paddingLeft:5
+    paddingLeft:5,
+    marginTop: 10,
   },
   text: {
     fontSize: 16
