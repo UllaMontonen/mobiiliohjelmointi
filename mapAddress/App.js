@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Button, Alert, Keyboard } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View, TextInput, Button, Alert, StatusBar, Keyboard } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import Constants from 'expo-constants';
+import { EXPO_MAPQUEST_API_KEY } from '@env';
 
 export default function App() {
   const initial = {
@@ -12,7 +11,6 @@ export default function App() {
     latitudeDelta: 0.0322,
     longitudeDelta: 0.0221
   };
-
 
   const [region, setRegion] = useState(initial);
   const [address, setAddress] = useState('');
@@ -36,12 +34,16 @@ export default function App() {
   }, []);
 
   const fetchCoordinates = async (address) => {
-    const KEY = process.env.EXPO_MAPQUEST_API_KEY || Constants.manifest.extra.apiKey;
+    //const KEY = process.env.EXPO_MAPQUEST_API_KEY || Constants.manifest.extra.apiKey;
+    const KEY = {
+      headers: {
+        apikey: EXPO_MAPQUEST_API_KEY
+      }
+    }
     const url = `http://www.mapquestapi.com/geocoding/v1/address?key=${KEY}&location=${address}`;
-  
 
     try {
-      const response = await fetch(url, options);
+      const response = await fetch(url, KEY);
       const data = await response.json();
       console.log(data);
 
